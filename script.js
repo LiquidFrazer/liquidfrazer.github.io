@@ -1,79 +1,73 @@
-let yesCount = 0;
+const enterScreen = document.getElementById("enterScreen");
+const siteContent = document.getElementById("siteContent");
+const music = document.getElementById("bgMusic");
 
+/* ENTER PARTICLES */
+const enterParticles = document.querySelector(".enterParticles");
+for (let i = 0; i < 40; i++) {
+  const p = document.createElement("div");
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (4 + Math.random() * 4) + "s";
+  enterParticles.appendChild(p);
+}
+
+/* ENTER LOGIC */
+enterScreen.addEventListener("click", () => {
+  music.play();
+  enterScreen.style.display = "none";
+  siteContent.style.display = "block";
+});
+
+/* NORMAL PARTICLES */
+const particles = document.querySelector(".particles");
+for (let i = 0; i < 40; i++) {
+  const p = document.createElement("div");
+  p.style.left = Math.random() * 100 + "vw";
+  p.style.animationDuration = (6 + Math.random() * 6) + "s";
+  particles.appendChild(p);
+}
+
+/* ROSES */
+const roseLayer = document.querySelector(".roseLayer");
+setInterval(() => {
+  const rose = document.createElement("img");
+  rose.src = "rose.png";
+  rose.style.left = Math.random() * 100 + "vw";
+  roseLayer.appendChild(rose);
+  setTimeout(() => rose.remove(), 18000);
+}, 700);
+
+/* BOOK */
+const bookIcon = document.getElementById("bookIcon");
+const bookOverlay = document.getElementById("bookOverlay");
+const closeBook = document.getElementById("closeBook");
+
+bookIcon.addEventListener("click", () => bookOverlay.style.display = "flex");
+closeBook.addEventListener("click", () => bookOverlay.style.display = "none");
+
+/* GIF */
+const bomb = document.getElementById("secretBomb");
+const gifOverlay = document.getElementById("gifOverlay");
+
+bomb.addEventListener("click", () => gifOverlay.style.display = "flex");
+gifOverlay.addEventListener("click", () => gifOverlay.style.display = "none");
+
+/* PROPOSAL */
+let yesCount = 0;
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const mainPage = document.getElementById("mainPage");
 const acceptPage = document.getElementById("acceptPage");
-const cursor = document.getElementById("cursor");
-const bomb = document.getElementById("secretBomb");
-const overlay = document.getElementById("gifOverlay");
-const photoIcon = document.getElementById("photoIcon");
-const photoBooth = document.getElementById("photoBooth");
-const galleryGrid = document.getElementById("galleryGrid");
 
-/* Cursor */
-document.addEventListener("mousemove", e => {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-});
-
-/* Click Glow */
-document.addEventListener("click", e => {
-    const glow = document.createElement("div");
-    glow.style.position = "fixed";
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-    glow.style.width = "20px";
-    glow.style.height = "20px";
-    glow.style.borderRadius = "50%";
-    glow.style.background = "radial-gradient(circle, crimson 0%, transparent 70%)";
-    glow.style.animation = "glowExpand 0.6s forwards";
-    document.body.appendChild(glow);
-    setTimeout(() => glow.remove(), 600);
-});
-
-/* YES / NO */
 noBtn.addEventListener("click", () => {
-    yesBtn.style.transform = `scale(${1 + yesCount * 0.4 + 0.3})`;
-    yesCount++;
+  yesBtn.style.transform = `scale(${1 + yesCount * 0.2 + 0.2})`;
+  yesCount++;
 });
 
 yesBtn.addEventListener("click", () => {
-    yesCount++;
-    if (yesCount >= 4) {
-        mainPage.style.display = "none";
-        acceptPage.style.display = "block";
-    }
+  yesCount++;
+  if (yesCount >= 4) {
+    mainPage.classList.add("hidden");
+    acceptPage.classList.remove("hidden");
+  }
 });
-
-/* Secret Bomb */
-bomb.addEventListener("click", () => overlay.style.display = "flex");
-overlay.addEventListener("click", () => overlay.style.display = "none");
-
-/* Floating Roses */
-function createRose() {
-    const rose = document.createElement("img");
-    rose.src = "rose.png";
-    rose.className = "rose";
-    rose.style.left = Math.random() * 100 + "vw";
-    document.body.appendChild(rose);
-    setTimeout(() => rose.remove(), 30000);
-}
-setInterval(createRose, 4000);
-
-/* Photo Booth Toggle */
-photoIcon.addEventListener("click", () => {
-    photoBooth.style.display = photoBooth.style.display === "flex" ? "none" : "flex";
-});
-
-/* Auto Load Photos (photo1.jpg, photo2.jpg...) */
-for (let i = 1; i <= 20; i++) {
-    const img = new Image();
-    img.src = `photos/photo${i}.jpg`;
-    img.onload = function() {
-        const div = document.createElement("div");
-        div.className = "photoItem";
-        div.appendChild(img);
-        galleryGrid.appendChild(div);
-    };
-}
