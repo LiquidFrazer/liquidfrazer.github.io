@@ -9,39 +9,36 @@ body {
     font-family: 'Poppins', sans-serif;
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(-45deg, #000000, #140000, #2a0000, #330000);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
+    background: radial-gradient(circle at center, #1a0000, #000000 70%);
+    animation: bgShift 20s infinite alternate;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #f5f5f5;
+    color: #e6e6e6;
 }
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes bgShift {
+    from { background-position: 0% 50%; }
+    to { background-position: 100% 50%; }
 }
 
-/* Fog Overlay */
+/* Fog */
 .fog {
     position: fixed;
     inset: 0;
-    background: url("https://www.transparenttextures.com/patterns/foggy-birds.png");
-    opacity: 0.05;
+    background: radial-gradient(circle, rgba(255,0,0,0.05), transparent 70%);
     pointer-events: none;
 }
 
 /* Cursor */
 .cursor {
     position: fixed;
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     background: crimson;
     border-radius: 50%;
     pointer-events: none;
-    box-shadow: 0 0 20px crimson, 0 0 40px red;
+    box-shadow: 0 0 15px crimson;
     transform: translate(-50%, -50%);
     z-index: 9999;
 }
@@ -49,72 +46,48 @@ body {
 /* Card */
 .card {
     width: 90%;
-    max-width: 800px;
-    padding: 70px;
-    border-radius: 30px;
-    background: rgba(10, 0, 0, 0.75);
+    max-width: 750px;
+    padding: 60px;
+    border-radius: 25px;
+    background: rgba(15, 0, 0, 0.8);
     backdrop-filter: blur(30px);
     border: 1px solid rgba(255,0,0,0.2);
-    box-shadow: 0 0 100px rgba(255,0,0,0.2);
+    box-shadow: 0 0 80px rgba(255,0,0,0.2);
     text-align: center;
     transition: 1s ease;
 }
 
-h1 {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 4rem;
-    color: crimson;
-    text-shadow: 0 0 30px red;
-    animation: heartbeat 2s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
 .story {
-    margin-top: 35px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 2;
 }
 
 .buttons {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 button {
-    padding: 20px 50px;
-    margin: 15px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    border: none;
+    padding: 18px 45px;
+    margin: 10px;
+    border-radius: 40px;
+    border: 1px solid crimson;
+    background: black;
+    color: crimson;
     transition: 0.4s ease;
 }
 
-#yesBtn {
-    background: black;
-    color: crimson;
-    border: 2px solid crimson;
-    box-shadow: 0 0 30px crimson;
+button:hover {
+    box-shadow: 0 0 40px crimson;
+    transform: scale(1.1);
 }
 
-#yesBtn:hover {
-    box-shadow: 0 0 60px red, 0 0 120px crimson;
-    transform: scale(1.2);
-}
-
-#noBtn {
-    background: #111;
-    color: #777;
-}
-
-/* Roses */
+/* Floating Roses */
 .rose {
     position: absolute;
-    width: 80px;
-    opacity: 0.1;
+    width: 70px;
+    opacity: 0.15;
     animation: floatRose 30s linear infinite;
+    filter: drop-shadow(0 0 10px crimson);
 }
 
 @keyframes floatRose {
@@ -122,53 +95,68 @@ button {
     to { transform: translateY(-10vh) rotate(360deg); }
 }
 
-/* Particles */
-.particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: crimson;
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: floatUp 12s linear infinite;
-}
-
-@keyframes floatUp {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-10vh); }
-}
-
-/* Click Glow */
-.clickGlow {
+/* Photo Booth */
+#photoIcon {
     position: fixed;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, crimson 0%, transparent 70%);
-    border-radius: 50%;
+    top: 20px;
+    left: 25px;
+    font-size: 26px;
+    z-index: 10000;
+    animation: pulse 2s infinite;
+}
+
+#photoBooth {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: none;
+    flex-direction: column;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+.galleryHeader {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: crimson;
+}
+
+#galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.photoItem {
+    position: relative;
+}
+
+.photoItem img {
+    width: 100%;
+    border-radius: 15px;
+    filter: brightness(0.9);
+}
+
+.photoItem::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('https://i.imgur.com/8g5Xg9Y.png');
+    background-size: cover;
+    opacity: 0.4;
     pointer-events: none;
-    animation: glowExpand 0.6s ease-out forwards;
 }
 
-@keyframes glowExpand {
-    from { transform: scale(1); opacity: 1; }
-    to { transform: scale(8); opacity: 0; }
-}
-
-/* Bomb */
+/* Secret Bomb */
 #secretBomb {
     position: fixed;
     top: 20px;
     right: 25px;
-    font-size: 28px;
-    animation: pulseBomb 2s infinite;
-    z-index: 10000;
+    font-size: 26px;
 }
 
-@keyframes pulseBomb {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-}
-
+/* GIF */
 #gifOverlay {
     position: fixed;
     inset: 0;
@@ -176,16 +164,13 @@ button {
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 9998;
 }
 
 #gifOverlay img {
     max-width: 80%;
     border-radius: 20px;
-    box-shadow: 0 0 50px crimson;
 }
 
 #acceptPage {
     display: none;
-    flex-direction: column;
 }
