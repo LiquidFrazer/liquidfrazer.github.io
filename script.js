@@ -1,91 +1,76 @@
-let yesClickCount = 0;
-let noClickCount = 0;
+let yesCount = 0;
 
-const mainText = document.querySelector("#main-text");
-const linesContainer = document.querySelector("#lines");
-const body = document.body;
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const mainPage = document.getElementById("mainPage");
+const acceptPage = document.getElementById("acceptPage");
+const cursor = document.getElementById("cursor");
+const bomb = document.getElementById("secretBomb");
+const overlay = document.getElementById("gifOverlay");
 
-// Function to Create Hypnotizing Hearts
-function createHypnotizingHeart() {
-    for (let i = 0; i < 20; i++) {  // Increase number of hearts
-        const heart = document.createElement("div");
-        heart.classList.add("hypnotizing-heart");
-        heart.innerHTML = "💖";
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.top = `${Math.random() * 100}%`;
-        document.body.appendChild(heart);
+/* Cursor */
+document.addEventListener("mousemove", e => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
 
-        setTimeout(() => heart.remove(), 3000);
-    }
-}
+/* Click Glow */
+document.addEventListener("click", e => {
+    const glow = document.createElement("div");
+    glow.className = "clickGlow";
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+    document.body.appendChild(glow);
+    setTimeout(() => glow.remove(), 600);
+});
 
-// Function to Create Stars in the Sky
-function createStars() {
-    const starsContainer = document.querySelector('.stars-container');
-    for (let i = 0; i < 100; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 50}%`;
-        star.style.animationDuration = `${Math.random() * 3 + 1}s`;
-        starsContainer.appendChild(star);
-    }
-}
-createStars();
+/* NO grows YES */
+noBtn.addEventListener("click", () => {
+    yesBtn.style.transform = `scale(${1 + yesCount * 0.4 + 0.3})`;
+    yesCount++;
+});
 
-// Function to Create Crying Emoji Rain
-function createCryingEmoji() {
-    for (let i = 0; i < 10; i++) {  
-        const emoji = document.createElement("div");
-        emoji.classList.add("emoji-rain");
-        emoji.innerHTML = "😭";
-        emoji.style.left = `${Math.random() * 100}%`;
-        document.body.appendChild(emoji);
-        setTimeout(() => emoji.remove(), 3000);
-    }
-}
-
-// Yes Button Click Event
-document.querySelector("#yes-btn").addEventListener("click", () => {
-    const yesLines = [
-        "Yay! You made my heart flutter! 💖",
-        "Awww, you’re the sweetest! 😊",
-        "Are you sure? Because my heart is racing! 💓",
-        "You really mean it? My heart is melting! 😍",
-        "You are officially my Valentine! 💞"
-    ];
-
-    if (yesClickCount < 5) {
-        linesContainer.textContent = yesLines[yesClickCount];
-        linesContainer.style.opacity = "1";
-        yesClickCount++;
-
-        if (yesClickCount === 5) {
-            mainText.textContent = "You’re my Valentine, Olivia! 💖";
-            setInterval(createHypnotizingHeart, 500); // Start Hypnotizing Hearts
-            setTimeout(() => window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ", 15000);
-        }
+/* YES 4 times */
+yesBtn.addEventListener("click", () => {
+    yesCount++;
+    if (yesCount >= 4) {
+        mainPage.style.opacity = "0";
+        setTimeout(() => {
+            mainPage.style.display = "none";
+            acceptPage.style.display = "flex";
+            roseBurst();
+        }, 1000);
     }
 });
 
-// No Button Click Event
-document.querySelector("#no-btn").addEventListener("click", () => {
-    const noLines = [
-        "Oh... that hurts... 💔",
-        "Are you really saying no? 😢",
-        "Please reconsider... I'm sad now... 😭",
-        "You're breaking my heart... 💔💔",
-        "I give up... I'm heartbroken... 💀"
-    ];
+/* Secret Bomb */
+bomb.addEventListener("click", () => overlay.style.display = "flex");
+overlay.addEventListener("click", () => overlay.style.display = "none");
 
-    if (noClickCount < 5) {
-        linesContainer.textContent = noLines[noClickCount];
-        linesContainer.style.opacity = "1";
-        createCryingEmoji();
-        noClickCount++;
+/* Floating Roses */
+function createRose() {
+    const rose = document.createElement("img");
+    rose.src = "https://pngimg.com/uploads/rose/rose_PNG669.png";
+    rose.className = "rose";
+    rose.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(rose);
+    setTimeout(() => rose.remove(), 30000);
+}
+setInterval(createRose, 4000);
 
-        if (noClickCount === 5) {
-            body.style.backgroundImage = "url('https://media.tenor.com/P3RqQUUK9BAAAAAM/rip-juice-cry.gif')";
-        }
+/* Particles */
+function createParticle() {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 12000);
+}
+setInterval(createParticle, 150);
+
+/* Rose Burst */
+function roseBurst() {
+    for (let i = 0; i < 20; i++) {
+        createRose();
     }
-});
+}

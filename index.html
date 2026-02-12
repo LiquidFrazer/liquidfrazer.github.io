@@ -1,28 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Love You Olivia 💖</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>For Olivia 🖤</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="stars-container"></div> <!-- Stars will be generated here -->
-    <div class="container">
-        <h1 id="main-text">Will you be my Valentine, Olivia? 💕</h1>
-        <p id="lines"></p>
-        <div class="buttons">
-            <button id="yes-btn">Yes 💖</button>
-            <button id="no-btn">No 💔</button>
-        </div>
+
+<audio autoplay loop>
+    <source src="bg.mp3" type="audio/mpeg">
+</audio>
+
+<div class="cursor" id="cursor"></div>
+<div class="fog"></div>
+
+<!-- Secret Bomb -->
+<div id="secretBomb">💣</div>
+
+<!-- GIF Overlay -->
+<div id="gifOverlay">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGVxdXptdGR4Y2lodm9nYXlmcnUxMThmaXM1czN2Z3UxZm9tcnVmYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/5WILI2Bw4nxUUb6cKQ/giphy.gif">
+</div>
+
+<div class="card" id="mainPage">
+    <h1>Olivia</h1>
+    <div class="story">
+        Olivia…<br><br>
+        In a world painted in shadows,<br>
+        you are the crimson that makes it beautiful.<br><br>
+        Between silence and chaos,<br>
+        you became my constant.<br><br>
+        Not slowly.<br>
+        Not accidentally.<br><br>
+        Completely.<br><br>
+        So tell me…
     </div>
 
-    <!-- Night Sky Elements -->
-    <div class="moon"></div>
-    <img src="cloud.png" class="cloud cloud1" alt="Cloud">
-    <img src="cloud.png" class="cloud cloud2" alt="Cloud">
-    <img src="cloud.png" class="cloud cloud3" alt="Cloud">
+    <div class="buttons">
+        <button id="yesBtn">YES, OLIVIA 🖤</button>
+        <button id="noBtn">NO</button>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<div class="card" id="acceptPage">
+    <h1>Olivia Said Yes</h1>
+    <div class="story">
+        And the darkness never looked so beautiful.
+    </div>
+
+    <ul>
+        <li>🖤 Your smile feels forbidden and perfect</li>
+        <li>🔥 Your presence changes everything</li>
+        <li>✨ You are art in motion, Olivia</li>
+        <li>🧠 Your mind fascinates me endlessly</li>
+        <li>🌹 You are elegance and chaos combined</li>
+        <li>🏡 You feel like home in every universe</li>
+    </ul>
+
+    <h2>Forever starts now.</h2>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
